@@ -32,9 +32,7 @@ Disclamer:
 
 This is will playbook site_infra.yml which will import and run the require playbooks to configure and install kubernetes. 
 
-2)
-
-On the master VM
+2) On the master VM
 	kubectl get nodes
 
 should appear both master and worker nodes.
