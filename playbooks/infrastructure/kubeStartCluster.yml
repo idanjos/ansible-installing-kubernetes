@@ -1,0 +1,36 @@
+- hosts: master
+  become: yes
+  tasks:
+    - name: Init cluster
+      shell: kubeadm init --apiserver-advertise-address={{ hostvars['master']['ansible_host'] }} --pod-network-cidr={{ cluster_network }}  --ignore-preflight-errors=all
+      tags:
+        - init    
+    - debug: var=hostvars['master']['ansible_host']
+    - debug: var=cluster_network
+    
+    - name: Wait until the file admin.conf exists
+      wait_for:
+        path: "{{ admin_conf_source }}"
+    
+
+    - name: Deploy Calico network
+      shell: kubectl --kubeconfig={{ admin_conf_source }} create -f https://docs.projectcalico.org/v3.14/manifests/calico.yaml
+      tags:
+        - init
+    - name: create .kube directory
+      become: yes
+      become_user: "{{ master_user }}"
+      file:
+        path: $HOME/.kube
+        state: directory
+        mode: 0755
+      tags:
+        - init
+    - name: copy admin.conf to user's kube config
+      copy:
+        src: "{{ admin_conf_source }}"
+        dest: "{{ admin_conf_dest }}"
+        remote_src: yes
+        owner: "{{ master_user }}"
+      
+        

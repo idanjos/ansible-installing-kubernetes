@@ -1,0 +1,8 @@
+---
+
+
+cluster_network: 10.10.0.0/24
+master_user: ubu
+kube_version: 1.19.0-00
+admin_conf_source: /etc/kubernetes/admin.conf
+admin_conf_dest: /home/{{ master_user }}/.kube/config

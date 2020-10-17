@@ -1,0 +1,27 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: Disable swap
+      shell: swapoff -a; sed -i '/swap/d' /etc/fstab
+   
+    - name: Turn off Firewall
+      shell: ufw disable
+    
+    - name: Update sysctl settings for Kubernetes
+      shell: |
+        cat >>/etc/sysctl.d/kubernetes.conf<<EOF
+        net.bridge.bridge-nf-call-ip6tables = 1
+        net.bridge.bridge-nf-call-iptables = 1
+        EOF
+     
+    - name: check sysctl
+      shell: sysctl --system
+
+    - name: activate docker.service
+      shell: systemctl enable docker.service
+- hosts: app
+  become: yes
+  tasks:
+    - debug: var=worker_name
+    - name: Change hostname of host
+      shell: hostnamectl set-hostname {{ worker_name }}

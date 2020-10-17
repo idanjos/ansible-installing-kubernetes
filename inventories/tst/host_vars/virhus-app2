@@ -1,0 +1,7 @@
+---
+ansible_host: 192.168.10.12 
+ansible_user: ubu
+ansible_sudo_pass: ubu
+ansible_ssh_pass: ubu
+
+worker_name: app2

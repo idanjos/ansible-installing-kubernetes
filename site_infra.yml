@@ -1,0 +1,13 @@
+---
+
+#Initial setup
+- import_playbook: playbooks/initial.yml
+
+#Kubernetes
+- import_playbook: playbooks/infrastructure/kube-dep.yml
+
+- import_playbook: playbooks/infrastructure/kubeinit.yml
+
+- import_playbook: playbooks/infrastructure/kubeStartCluster.yml
+
+- import_playbook: playbooks/infrastructure/kubeJoin.yml
