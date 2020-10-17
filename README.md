@@ -27,17 +27,16 @@ Disclamer:
 	
 	The repo was tested on VMs
 
-1)
+1)This is will playbook site_infra.yml which will import and run the require playbooks to configure and install kubernetes. 
 
 	ansible-playerbook -i inventories/tst/ site_infra.yml
 
-This is will playbook site_infra.yml which will import and run the require playbooks to configure and install kubernetes. 
+
 
 2) On the master VM
-
+	
 	kubectl get nodes
 
-should appear both master and worker nodes.
 
 Resources:
 https://github.com/justmeandopensource/kubernetes/blob/master/docs/install-cluster-ubuntu-20.md
